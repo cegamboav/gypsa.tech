@@ -1,11 +1,18 @@
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Logo } from "../brand/Logo";
 import { navLinks } from "../../data/content";
 import { Button } from "../ui/Button";
 import { Container } from "../ui/Container";
 
+function homeHref(hash: string) {
+  return `/${hash}`;
+}
+
 export function Header() {
+  const { pathname } = useLocation();
+  const isHome = pathname === "/";
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -35,13 +42,13 @@ export function Header() {
         as="div"
         className="flex min-h-[5rem] items-center justify-between gap-4 py-2 sm:min-h-[5.5rem] sm:py-2.5"
       >
-        <a
-          href="#inicio"
+        <Link
+          to={isHome ? "#inicio" : "/#inicio"}
           className="-ml-0.5 shrink-0 transition-opacity hover:opacity-90"
           aria-label="GYPSA — Inicio"
         >
           <Logo variant="compact" />
-        </a>
+        </Link>
 
         <nav
           className="hidden items-center gap-8 lg:flex"
@@ -50,7 +57,7 @@ export function Header() {
           {navLinks.map((link) => (
             <a
               key={link.href}
-              href={link.href}
+              href={isHome ? link.href : homeHref(link.href)}
               className="text-sm font-medium text-slate-600 transition-colors hover:text-navy-800"
             >
               {link.label}
@@ -59,7 +66,11 @@ export function Header() {
         </nav>
 
         <div className="hidden lg:block">
-          <Button href="#contacto" variant="primary" className="!px-5 !py-2.5">
+          <Button
+            href={isHome ? "#contacto" : "/#contacto"}
+            variant="primary"
+            className="!px-5 !py-2.5"
+          >
             Agendar una conversación
           </Button>
         </div>
@@ -88,7 +99,7 @@ export function Header() {
             {navLinks.map((link) => (
               <a
                 key={link.href}
-                href={link.href}
+                href={isHome ? link.href : homeHref(link.href)}
                 className="rounded-xl px-3 py-3 text-sm font-medium text-slate-700 transition-colors hover:bg-surface-muted"
                 onClick={() => setMenuOpen(false)}
               >
@@ -96,7 +107,7 @@ export function Header() {
               </a>
             ))}
             <Button
-              href="#contacto"
+              href={isHome ? "#contacto" : "/#contacto"}
               variant="primary"
               className="mt-3 w-full"
               onClick={() => setMenuOpen(false)}

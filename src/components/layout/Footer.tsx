@@ -1,4 +1,5 @@
 import { Linkedin, Mail, MessageCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Logo } from "../brand/Logo";
 import { Container } from "../ui/Container";
 
@@ -6,6 +7,11 @@ const socialLinks = [
   { label: "LinkedIn", href: "#", icon: Linkedin },
   { label: "Correo", href: "mailto:correo@gypsa.tech", icon: Mail },
   { label: "WhatsApp", href: "#", icon: MessageCircle },
+] as const;
+
+const legalLinks = [
+  { label: "Privacy Policy", to: "/legal/privacy-policy" as const },
+  { label: "Terms of Service", to: "#" as const },
 ] as const;
 
 export function Footer() {
@@ -25,27 +31,57 @@ export function Footer() {
             </p>
           </div>
 
-          <nav aria-label="Redes sociales">
-            <p className="mb-3 text-center text-xs font-semibold uppercase tracking-wider text-slate-500 sm:text-left">
-              Conectar
-            </p>
-            <ul className="flex justify-center gap-3 sm:justify-start">
-              {socialLinks.map(({ label, href, icon: Icon }) => (
-                <li key={label}>
-                  <a
-                    href={href}
-                    className="inline-flex rounded-xl border border-white/10 bg-white/5 p-3 text-slate-300 transition-colors hover:border-brand-500/40 hover:bg-white/10 hover:text-white"
-                    aria-label={label}
-                    onClick={
-                      href === "#" ? (e) => e.preventDefault() : undefined
-                    }
-                  >
-                    <Icon className="h-4 w-4" aria-hidden />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <div className="flex flex-col items-center gap-8 sm:items-end sm:gap-10">
+            <nav aria-label="Legal">
+              <p className="mb-3 text-center text-xs font-semibold uppercase tracking-wider text-slate-500 sm:text-right">
+                Legal
+              </p>
+              <ul className="flex flex-col items-center gap-2 sm:items-end">
+                {legalLinks.map(({ label, to }) => (
+                  <li key={label}>
+                    {to === "#" ? (
+                      <a
+                        href="#"
+                        className="text-sm text-slate-400 transition-colors hover:text-white"
+                        onClick={(e) => e.preventDefault()}
+                      >
+                        {label}
+                      </a>
+                    ) : (
+                      <Link
+                        to={to}
+                        className="text-sm text-slate-400 transition-colors hover:text-white"
+                      >
+                        {label}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <nav aria-label="Redes sociales">
+              <p className="mb-3 text-center text-xs font-semibold uppercase tracking-wider text-slate-500 sm:text-right">
+                Conectar
+              </p>
+              <ul className="flex justify-center gap-3 sm:justify-end">
+                {socialLinks.map(({ label, href, icon: Icon }) => (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      className="inline-flex rounded-xl border border-white/10 bg-white/5 p-3 text-slate-300 transition-colors hover:border-brand-500/40 hover:bg-white/10 hover:text-white"
+                      aria-label={label}
+                      onClick={
+                        href === "#" ? (e) => e.preventDefault() : undefined
+                      }
+                    >
+                      <Icon className="h-4 w-4" aria-hidden />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
         </div>
 
         <p className="mt-12 border-t border-white/10 pt-8 text-center text-xs text-slate-500">
