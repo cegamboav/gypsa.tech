@@ -132,6 +132,12 @@ export const processSteps: ProcessStep[] = [
 
 export const contactLinks = [
   { label: "LinkedIn", href: "#", placeholder: true },
-  { label: "correo@gypsa.tech", href: "mailto:correo@gypsa.tech", placeholder: true },
+  {
+    label: "Contacto por correo",
+    href: "mailto:contacto@gypsa.tech",
+    placeholder: false,
+    detail: "contacto@gypsa.tech",
+    description: "También puedes escribirnos directamente por correo electrónico.",
+  },
   { label: "WhatsApp", href: "#", placeholder: true },
 ] as const;
